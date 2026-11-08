@@ -1,0 +1,9 @@
+{% assign lang = page.lang | default: site.locale %}
+{% assign translated_projects = site.content | where: "lang", lang %}
+{% assign project_items = include.items | default: site.data.projects.items %}
+<div class="entries-grid">
+{% for item in project_items %}
+  {% assign post = translated_projects | where: "project_id", item.id | first %}
+  {% if post %}{% include project-tile.html project=post item=item locale=lang %}{% endif %}
+{% endfor %}
+</div>

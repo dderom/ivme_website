@@ -1,0 +1,34 @@
+---
+nl:
+- title: Home
+  url: "/nl/"
+- title: Over IVME
+  url: "/nl/over-ivme/"
+- title: Projecten
+  url: "/nl/projecten/"
+- title: Geschiedenis
+  url: "/nl/geschiedenis/"
+- title: Contact
+  url: "/nl/contact/"
+fr:
+- title: Accueil
+  url: "/fr/"
+- title: À propos
+  url: "/fr/a-propos/"
+- title: Projets
+  url: "/fr/projets/"
+- title: Histoire
+  url: "/fr/histoire/"
+- title: Contact
+  url: "/fr/contact/"
+en:
+- title: Home
+  url: "/en/"
+- title: About IVME
+  url: "/en/about/"
+- title: Projects
+  url: "/en/projects/"
+- title: History
+  url: "/en/history/"
+- title: Contact
+  url: "/en/contact/"

@@ -1,0 +1,31 @@
+title: IVME
+name: Internationale Vereniging voor Muziekeducatie
+locale: nl
+url: "" # Voor publicatie: https://jouw-domein.be
+baseurl: ""
+theme: minimal-mistakes-jekyll
+minimal_mistakes_skin: sunrise
+timezone: Europe/Brussels
+markdown: kramdown
+strict_front_matter: true
+plugins:
+  - jekyll-include-cache
+atom_feed:
+  hide: true
+collections:
+  content:
+    output: true
+    permalink: /:path/
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: single
+      author_profile: false
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - Dockerfile
+  - compose.yaml
+  - vendor
+  - README.md

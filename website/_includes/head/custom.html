@@ -1,0 +1,8 @@
+{% if page.translation_key and page.translation_key != "language-selection" %}
+  {% assign translations = site.content | where: "translation_key", page.translation_key %}
+  {% for translation in translations %}
+<link rel="alternate" hreflang="{{ translation.lang }}" href="{{ translation.url | absolute_url }}">
+  {% endfor %}
+{% endif %}
+
+<script src="{{ '/assets/js/header.js' | relative_url }}" defer></script>

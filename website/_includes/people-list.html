@@ -1,0 +1,7 @@
+{% assign lang = page.lang | default: site.locale %}
+{% for person in site.data.people.items %}
+<h3>{{ person.name | escape }}</h3>
+<p>{{ person.roles[lang] | escape }}</p>
+{% else %}
+<p>{{ site.data.translations[lang].people_pending }}</p>
+{% endfor %}

@@ -1,0 +1,258 @@
+# Pages CMS edits the existing Jekyll sources; the public site is hosted separately.
+# Select branch main in Pages CMS to save changes directly to main.
+media:
+  input: website/assets/images
+  output: /assets/images
+  categories: [image]
+
+settings:
+  content:
+    merge: true
+
+components:
+  body:
+    label: Tekst (Markdown)
+    type: code
+    options:
+      format: markdown
+    description: >-
+      Bewaar de bestaande Liquid-tags ({% ... %} en {{ ... }}) en Kramdown-attributen
+      ({: ... }); ze bouwen de lijsten en links op de website.
+  header:
+    label: Afbeeldingen
+    type: object
+    fields:
+      - name: overlay_image
+        label: Sfeerbeeld bovenaan
+        type: image
+      - name: teaser
+        label: Afbeelding op projecttegel
+        type: image
+  translated_text:
+    type: object
+    fields:
+      - { name: nl, label: Nederlands, type: string }
+      - { name: fr, label: Français, type: string }
+      - { name: en, label: English, type: string }
+  menu:
+    type: object
+    list: true
+    fields:
+      - { name: title, label: Titel, type: string, required: true }
+      - { name: url, label: Link, type: string, required: true }
+  interface_labels:
+    type: object
+    fields:
+      - { name: people_pending, label: Melding bij lege personenlijst, type: text }
+      - { name: languages, label: Taalkeuze, type: string }
+      - { name: menu, label: Menu, type: string }
+
+content:
+  - name: landing
+    label: Startpagina (/)
+    type: file
+    path: website/_content/index.md
+    format: yaml-frontmatter
+    operations: &existing_only
+      create: false
+      rename: false
+      delete: false
+    fields: &home_fields
+      - { name: title, label: Titel, type: string, required: true }
+      - { name: excerpt, label: Korte beschrijving, type: text }
+      - { name: header, component: header }
+      - { name: upcoming_heading, label: Kop aankomende projecten, type: string }
+      - { name: empty_message, label: Tekst als er geen aankomende projecten zijn, type: text }
+      - { name: archive_heading, label: Kop historische projecten, type: string }
+      - { name: body, component: body }
+      - { name: permalink, label: Publieke URL, type: string, readonly: true }
+
+  - name: dutch
+    label: Nederlands
+    type: group
+    items:
+      - name: home_nl
+        label: Home
+        type: file
+        path: website/_content/nl/index.md
+        format: yaml-frontmatter
+        operations: *existing_only
+        fields: *home_fields
+      - name: pages_nl
+        label: Pagina’s
+        type: collection
+        path: website/_content/nl
+        format: yaml-frontmatter
+        subfolders: false
+        exclude: [index.md]
+        operations: *existing_only
+        fields: &page_fields
+          - { name: title, label: Titel, type: string, required: true }
+          - { name: header, component: header }
+          - { name: body, component: body }
+          - { name: permalink, label: Publieke URL, type: string, readonly: true }
+      - name: projects_nl
+        label: Projectteksten
+        type: collection
+        path: website/_content/nl/projects
+        format: yaml-frontmatter
+        subfolders: false
+        operations: *existing_only
+        fields: &project_fields
+          - { name: title, label: Titel, type: string, required: true }
+          - { name: excerpt, label: Korte beschrijving op projecttegel, type: text }
+          - { name: year, label: Jaar, type: number }
+          - { name: header, component: header }
+          - { name: body, component: body }
+          - { name: project_id, label: Project-ID, type: string, readonly: true }
+          - { name: permalink, label: Publieke URL, type: string, readonly: true }
+
+  - name: french
+    label: Français
+    type: group
+    items:
+      - name: home_fr
+        label: Accueil
+        type: file
+        path: website/_content/fr/index.md
+        format: yaml-frontmatter
+        operations: *existing_only
+        fields: *home_fields
+      - name: pages_fr
+        label: Pages
+        type: collection
+        path: website/_content/fr
+        format: yaml-frontmatter
+        subfolders: false
+        exclude: [index.md]
+        operations: *existing_only
+        fields: *page_fields
+      - name: projects_fr
+        label: Textes des projets
+        type: collection
+        path: website/_content/fr/projects
+        format: yaml-frontmatter
+        subfolders: false
+        operations: *existing_only
+        fields: *project_fields
+
+  - name: english
+    label: English
+    type: group
+    items:
+      - name: home_en
+        label: Home
+        type: file
+        path: website/_content/en/index.md
+        format: yaml-frontmatter
+        operations: *existing_only
+        fields: *home_fields
+      - name: pages_en
+        label: Pages
+        type: collection
+        path: website/_content/en
+        format: yaml-frontmatter
+        subfolders: false
+        exclude: [index.md]
+        operations: *existing_only
+        fields: *page_fields
+      - name: projects_en
+        label: Project descriptions
+        type: collection
+        path: website/_content/en/projects
+        format: yaml-frontmatter
+        subfolders: false
+        operations: *existing_only
+        fields: *project_fields
+
+  - name: shared
+    label: Gedeelde inhoud
+    type: group
+    items:
+      - name: projects
+        label: Projectvolgorde en datums
+        type: file
+        path: website/_data/projects.yml
+        format: yaml
+        operations: *existing_only
+        fields:
+          - name: items
+            label: Projecten (in weergavevolgorde)
+            type: object
+            list: true
+            fields:
+              - { name: id, label: Project-ID, type: string, required: true, readonly: true }
+              - name: start_date
+                label: Startdatum (optioneel)
+                type: date
+                default: ""
+                options: { time: false, format: yyyy-MM-dd }
+              - name: end_date
+                label: Einddatum (optioneel)
+                type: date
+                default: ""
+                options: { time: false, format: yyyy-MM-dd }
+              - { name: date_label, label: Zichtbare datum per taal, component: translated_text }
+              - { name: homepage, label: Historisch hoogtepunt op homepage, type: boolean }
+      - name: people
+        label: Mensen
+        type: file
+        path: website/_data/people.yml
+        format: yaml
+        operations: *existing_only
+        fields:
+          - name: items
+            label: Mensen
+            type: object
+            list: true
+            fields:
+              - { name: name, label: Naam, type: string, required: true }
+              - { name: roles, label: Functie per taal, component: translated_text }
+      - name: timeline
+        label: Tijdlijn
+        type: file
+        path: website/_data/timeline.yml
+        format: yaml
+        list: true
+        operations: *existing_only
+        fields:
+          - { name: year, label: Jaar, type: number, required: true }
+          - name: project
+            label: Project
+            type: reference
+            options:
+              collection: projects_nl
+              value: "{fields.project_id}"
+              label: "{fields.title}"
+      - name: navigation
+        label: Menu’s
+        type: file
+        path: website/_data/navigation.yml
+        format: yaml
+        operations: *existing_only
+        fields:
+          - { name: nl, label: Nederlands, component: menu }
+          - { name: fr, label: Français, component: menu }
+          - { name: en, label: English, component: menu }
+      - name: languages
+        label: Taalkeuze
+        type: file
+        path: website/_data/languages.yml
+        format: yaml
+        list: true
+        operations: *existing_only
+        fields:
+          - { name: code, label: Taalcode, type: string, readonly: true }
+          - { name: flag, label: Vlag (emoji), type: string }
+          - { name: label, label: Taalnaam, type: string }
+          - { name: url, label: Link naar taalhomepage, type: string }
+      - name: translations
+        label: Gedeelde teksten
+        type: file
+        path: website/_data/translations.yml
+        format: yaml
+        operations: *existing_only
+        fields:
+          - { name: nl, label: Nederlands, component: interface_labels }
+          - { name: fr, label: Français, component: interface_labels }
+          - { name: en, label: English, component: interface_labels }

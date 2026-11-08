@@ -1,0 +1,31 @@
+{% comment %}Compact IVME header. Standard HTML details/summary; theme styles remain responsible for the page layouts.{% endcomment %}
+{% assign locale = include.locale | default: site.locale %}
+{% assign navigation = site.data.navigation[locale] | default: site.data.navigation.nl %}
+{% assign home_url = '/' | append: locale | append: '/' %}
+{% assign current_language = site.data.languages | where: "code", locale | first %}
+{% assign translations = site.content | where: "translation_key", page.translation_key %}
+<header class="masthead">
+  <div class="masthead__inner-wrap ivme-header">
+    <a class="ivme-brand" href="{{ home_url | relative_url }}">{{ site.title | escape }}</a>
+    <nav id="site-nav" class="ivme-controls" aria-label="{{ site.data.translations[locale].menu }}">
+      <details class="ivme-dropdown" name="header-controls">
+        <summary class="ivme-toggle" aria-label="{{ site.data.translations[locale].menu }}" title="{{ site.data.translations[locale].menu }}"><span class="ivme-hamburger" aria-hidden="true"></span></summary>
+        <ul class="ivme-panel ivme-menu">
+          {% for link in navigation %}
+          <li><a href="{{ link.url | relative_url }}"{% if page.url == link.url %} aria-current="page"{% endif %}>{{ link.title | escape }}</a></li>
+          {% endfor %}
+        </ul>
+      </details>
+      <details class="ivme-dropdown ivme-language" name="header-controls">
+        <summary class="ivme-toggle" aria-label="{{ site.data.translations[locale].languages }}: {{ current_language.label }}" title="{{ site.data.translations[locale].languages }}: {{ current_language.label }}"><span aria-hidden="true">{{ current_language.flag }}</span></summary>
+        <ul class="ivme-panel ivme-language-options">
+          {% for language in site.data.languages %}
+            {% assign translation = translations | where: "lang", language.code | first %}
+            {% assign language_url = translation.url | default: language.url %}
+          <li><a href="{{ language_url | relative_url }}" lang="{{ language.code }}" hreflang="{{ language.code }}" aria-label="{{ language.label }}" title="{{ language.label }}"{% if locale == language.code %} aria-current="true"{% endif %}><span aria-hidden="true">{{ language.flag }}</span></a></li>
+          {% endfor %}
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>

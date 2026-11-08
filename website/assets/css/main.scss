@@ -1,0 +1,77 @@
+---
+---
+@charset "utf-8";
+@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}";
+@import "minimal-mistakes";
+
+// Small scoped additions: compact header controls and project tile surfaces.
+.ivme-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.ivme-header::before, .ivme-header::after { content: none; }
+.ivme-brand { color: inherit; font-weight: bold; text-decoration: none; }
+.ivme-controls { display: flex; align-items: center; gap: .25rem; }
+.ivme-dropdown { position: relative; }
+.ivme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  cursor: pointer;
+  list-style: none;
+}
+.ivme-toggle::-webkit-details-marker { display: none; }
+.ivme-toggle:hover, .ivme-toggle:focus-visible { background: $border-color; }
+.ivme-toggle:focus-visible { outline: 2px solid $link-color; outline-offset: 2px; }
+.ivme-hamburger {
+  width: 22px;
+  height: 16px;
+  background: linear-gradient(currentColor, currentColor) center / 100% 2px no-repeat;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+}
+.ivme-panel {
+  position: absolute;
+  z-index: 100;
+  inset-inline-end: 0;
+  top: 100%;
+  margin: .25rem 0 0;
+  padding: .25rem;
+  list-style: none;
+  background: $background-color;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .12);
+}
+.ivme-panel li { margin: 0; }
+.ivme-panel a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: .25rem .75rem;
+  color: $text-color;
+  text-decoration: none;
+}
+.ivme-panel a:hover, .ivme-panel a:focus-visible { background: $border-color; }
+.ivme-panel a[aria-current] { box-shadow: inset 3px 0 $link-color; }
+.ivme-menu { width: min(16rem, calc(100vw - 5rem)); }
+.ivme-language-options a { justify-content: center; min-width: 44px; padding: .25rem; }
+
+// Keep the theme's responsive grid; add only a tile surface and a full-card link.
+.ivme-project-tile {
+  position: relative;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid $border-color;
+  border-top: 4px solid $link-color;
+  border-radius: 6px;
+  background: $background-color;
+}
+.ivme-project-tile .archive__item-title { margin-top: .5rem; }
+.ivme-project-tile .archive__item-title a::after { position: absolute; inset: 0; content: ""; }
+.ivme-project-tile:focus-within { outline: 2px solid $link-color; outline-offset: 2px; }

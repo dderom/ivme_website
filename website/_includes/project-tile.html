@@ -1,0 +1,18 @@
+{% assign project = include.project %}
+{% assign item = include.item %}
+{% assign date_label = item.date_label[include.locale] %}
+{% unless date_label %}
+  {% if item.start_date %}{% assign date_label = item.start_date | date: "%d/%m/%Y" %}{% endif %}
+{% endunless %}
+<div class="grid__item">
+  <article class="archive__item ivme-project-tile" lang="{{ include.locale }}">
+    {% if project.header.teaser %}
+    <div class="archive__item-teaser"><img src="{{ project.header.teaser | relative_url }}" alt="" loading="lazy"></div>
+    {% endif %}
+    <h3 class="archive__item-title"><a href="{{ project.url | relative_url }}">{{ project.title | escape }}</a></h3>
+    {% if date_label %}
+    <p class="page__meta">{% if item.start_date %}<time datetime="{{ item.start_date | date: '%Y-%m-%d' }}">{{ date_label | escape }}</time>{% else %}{{ date_label | escape }}{% endif %}</p>
+    {% endif %}
+    <p class="archive__item-excerpt">{{ project.excerpt | strip_html | escape }}</p>
+  </article>
+</div>

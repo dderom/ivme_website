@@ -1,0 +1,9 @@
+# Jekyll build and local dependencies
+website/_site/
+website/.jekyll-cache/
+website/.jekyll-metadata
+website/.sass-cache/
+website/.bundle/
+website/vendor/
+.DS_Store
+.env

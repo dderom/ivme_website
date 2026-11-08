@@ -1,0 +1,26 @@
+{% assign lang = page.lang | default: site.locale %}
+{% assign translated_projects = site.content | where: "lang", lang %}
+{% assign today = site.time | date: "%Y-%m-%d" %}
+{% assign upcoming_ids = "" | split: "," %}
+{% assign dated_items = site.data.projects.items | sort: "start_date" %}
+{% for item in dated_items %}
+  {% assign project = translated_projects | where: "project_id", item.id | first %}
+  {% unless project and item.start_date %}{% continue %}{% endunless %}
+  {% assign last_day = item.end_date | default: item.start_date | date: "%Y-%m-%d" %}
+  {% if last_day >= today %}{% assign upcoming_ids = upcoming_ids | push: item.id %}{% endif %}
+{% endfor %}
+{% if upcoming_ids.size > 0 %}
+<h2>{{ page.upcoming_heading | escape }}</h2>
+<div class="entries-grid">
+  {% for id in upcoming_ids %}
+    {% assign item = dated_items | where: "id", id | first %}
+    {% assign project = translated_projects | where: "project_id", id | first %}
+    {% include project-tile.html project=project item=item locale=lang %}
+  {% endfor %}
+</div>
+{% else %}
+<p>{{ page.empty_message | escape }}</p>
+<h2>{{ page.archive_heading | escape }}</h2>
+{% assign highlights = site.data.projects.items | where: "homepage", true %}
+{% include project-list.html items=highlights %}
+{% endif %}

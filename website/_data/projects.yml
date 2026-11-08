@@ -1,0 +1,40 @@
+---
+items:
+- id: cantabile
+  start_date: "2015-03-04"
+  date_label:
+    nl: 4 maart 2015
+    fr: 4 mars 2015
+    en: 4 March 2015
+  homepage: false
+- id: podijac
+  date_label:
+    nl: "2013"
+    fr: "2013"
+    en: "2013"
+  homepage: true
+- id: compositiewedstrijd
+  date_label:
+    nl: "2011"
+    fr: "2011"
+    en: "2011"
+  homepage: true
+- id: orgelwandeling
+  start_date: "2009-03-08"
+  date_label:
+    nl: 8 maart 2009
+    fr: 8 mars 2009
+    en: 8 March 2009
+  homepage: false
+- id: american-arts-festival
+  date_label:
+    nl: Maart 2009
+    fr: Mars 2009
+    en: March 2009
+  homepage: false
+- id: flemish-fortnight
+  date_label:
+    nl: September 2006
+    fr: Septembre 2006
+    en: September 2006
+  homepage: true

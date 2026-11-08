@@ -1,0 +1,13 @@
+---
+- code: nl
+  flag: "🇳🇱"
+  label: Nederlands
+  url: "/nl/"
+- code: fr
+  flag: "🇫🇷"
+  label: Français
+  url: "/fr/"
+- code: en
+  flag: "🇬🇧"
+  label: English
+  url: "/en/"
